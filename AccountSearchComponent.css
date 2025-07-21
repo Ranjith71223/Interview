@@ -1,0 +1,9 @@
+.small-input lightning-input {
+    width: 100%;
+}
+
+.small-input lightning-input input {
+    font-size: 0.75rem;     /* smaller font */
+    padding: 0.3rem 0.5rem; /* smaller padding */
+    height: 1.75rem;        /* smaller height */
+}

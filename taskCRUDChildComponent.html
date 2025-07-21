@@ -1,0 +1,55 @@
+<template>
+    <lightning-card >
+        <h1 slot="title">All Tasks related to the selected Account</h1>
+        <div slot="actions">
+            <lightning-button label="New Task" onclick={handleNewTask}></lightning-button>
+        </div>
+        
+
+        <template if:true={tasks}>
+            <lightning-datatable
+                key-field="Id"
+                data={tasks}
+                columns={columns}
+                onrowaction={handleRowAction}>
+            </lightning-datatable>
+        </template>
+
+        <template if:true={showModal}>
+            <section role="dialog" class="slds-modal slds-fade-in-open">
+                <div class="slds-modal__container">
+                    <header class="slds-modal__header">
+                        <h2 class="slds-modal__title">{modalTitle}</h2>
+                    </header>
+                    <div class="slds-modal__content">
+                        <lightning-layout multiple-rows>
+
+            <!-- First Row -->
+            <lightning-layout-item size="6" padding="around-small">
+                <lightning-input label="Subject" value={taskRecord.Subject} onchange={handleInputChange} data-field="Subject"></lightning-input>
+                <lightning-combobox
+    name="status"
+    label="Status"
+    value={taskRecord.Status}
+    placeholder="Select Status"
+    options={statusOptions}
+    onchange={handlePicklistChange}
+    data-field="Status">
+</lightning-combobox>
+            </lightning-layout-item>
+                <lightning-layout-item size="6" padding="around-small">
+                    <lightning-input label="Priority" value={taskRecord.Priority} onchange={handleInputChange} data-field="Priority"></lightning-input>
+                    <lightning-input type="date" label="Due Date" value={taskRecord.ActivityDate} onchange={handleInputChange} data-field="ActivityDate"></lightning-input>
+                </lightning-layout-item>
+                </lightning-layout>
+                    </div>
+                    <footer class="slds-modal__footer">
+                        <lightning-button label="Cancel" onclick={handleCancel}></lightning-button>
+                        <lightning-button variant="brand" label="Save" onclick={handleSave}></lightning-button>
+                    </footer>
+                </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
+        </template>
+    </lightning-card>
+</template>

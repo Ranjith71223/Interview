@@ -1,0 +1,55 @@
+<template>
+    <lightning-card title="Task Generator" icon-name="standard:account">
+        <div class="slds-p-horizontal_medium slds-p-top_small">
+
+            <!-- Search Input -->
+            <lightning-input
+                class="small-input slds-m-bottom_medium"
+                label="Search Account"
+                value={searchKey}
+                onchange={handleSearch}
+                type="search"
+                placeholder="Type account name..."
+                >
+            </lightning-input>
+
+            <!-- Account Search Results -->
+            <template if:true={accounts}>
+                <ul class="slds-list_dotted slds-m-bottom_medium">
+                    <template for:each={accounts} for:item="acc">
+                        <li key={acc.Id} class="slds-p-vertical_x-small">
+                            <lightning-icon icon-name="standard:account" size="x-small" class="slds-m-right_x-small"></lightning-icon>
+                            <a href="javascript:void(0);"
+                               data-id={acc.Id}
+                               onclick={handleAccountSelect}
+                               class="slds-text-link slds-text-title_bold">
+                                {acc.Name}
+                            </a>
+                        </li>
+                    </template>
+                </ul>
+            </template>
+            <template if:true={EmptySearch}>
+                No Accounts matching the Search criteria. Refine your search.            
+            </template>
+            <div>
+                Total number of Tasks in the Account : {taskCount}
+            </div>
+            <!-- Selected Account Details -->
+            <template if:true={selectedAccount}>
+                <div class="slds-box slds-theme_shade slds-m-top_medium">
+                    <div class="slds-text-heading_small slds-m-bottom_small">Account Details</div>
+                    <p><strong>Name:</strong> {selectedAccount.Name}</p>
+                    <p><strong>Industry:</strong> {selectedAccount.Industry}</p>
+                    <p><strong>Phone:</strong> {selectedAccount.Phone}</p>
+
+                    <!-- Child Component -->
+                    <div class="slds-m-top_medium">
+                        <c-task-c-r-u-d-child-component ontaskcount={handleTaskCount} account-id={selectedAccount.Id}></c-task-c-r-u-d-child-component>
+                    </div>
+                </div>
+            </template>
+            
+        </div>
+    </lightning-card>
+</template>
